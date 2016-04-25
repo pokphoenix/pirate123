@@ -13,7 +13,12 @@ import React, {
 } from 'react-native';
 
 
-var Main = require('./main');
+var Main = require('./page/main');
+var Splash = require('./page/splash');
+var Play = require('./page/play');
+var Pause = require('./page/pause');
+var GameOver = require('./page/gameover');
+
 
 class pirate123 extends Component {
 
@@ -22,19 +27,32 @@ class pirate123 extends Component {
             <Navigator
                 style={styles.navigator}
                 renderScene={this.renderScene.bind(this)}
-                initialRoute={{ title: 'Property Finder', component: 'Main' }}
+                initialRoute={{ title: 'Property Finder', id: 'Splash' }}
+                configureScene={(route) => {
+                  if (route.sceneConfig) {
+                    return route.sceneConfig;
+                  }
+                  return Navigator.SceneConfigs.FloatFromRight;
+                }}
                 />
         );
     }
 
     renderScene(route, navigator) {
-        var routeId = route.component;
-        if (routeId === 'Main') {
-            return (
-                <Main
-                    navigator={navigator} />
-            );
+
+        switch (route.id) {
+            case 'Splash':
+                return (<Splash navigator={navigator} title="Splash"/>);
+            case 'Main':
+                return (<Main navigator={navigator} title="Main" />);
+            case 'Play':
+                return (<Play navigator={navigator} title="Play" />);
+            case 'Pause':
+                return (<Pause navigator={navigator} title="Pause" />);
+            case 'GameOver':
+                return (<GameOver navigator={navigator} title="GameOver" />);
         }
+
         return null ;
     }
 
