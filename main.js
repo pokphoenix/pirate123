@@ -1,5 +1,22 @@
+/**
+ * Sample React Native App
+ * https://github.com/facebook/react-native
+ */
 
- Dimensions = require('Dimensions');
+import React, {
+    AppRegistry,
+    Component,
+    StyleSheet,
+    Text,
+    View,
+    Image,
+    TouchableHighlight,
+    Alert,
+    TextInput
+} from 'react-native';
+
+var padding = 24 ;
+var Dimensions = require('Dimensions');
 var window = Dimensions.get('window');
 var contain_w = window.width - ( padding*2 ) ;
 var btn_y = contain_w/4.9 ;
