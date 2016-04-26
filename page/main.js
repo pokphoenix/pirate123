@@ -12,7 +12,8 @@ import React, {
     Image,
     TouchableHighlight,
     Alert,
-    TextInput
+    TextInput,
+    TouchableWithoutFeedback
 } from 'react-native';
 
 var padding = 24 ;
@@ -21,14 +22,15 @@ var window = Dimensions.get('window');
 var contain_w = window.width - ( padding*2 ) ;
 var btn_y = contain_w/4.9 ;
 
-
+var Animatable = require('react-native-animatable');
 
 class Main extends Component {
 
-    gotoPlay(level) {
+    _gotoPlay(level, type='Normal') {
         this.props.navigator.push({
             id: 'Play',
-            passProps: { gameLevel : 'Easy' }
+            passProps: { gameLevel : level },
+            type : type
         });
     }
 
@@ -44,13 +46,16 @@ class Main extends Component {
 
                 <TouchableHighlight style={ styles.btn }
                                     underlayColor='#99d9f4'
-                                    onPress={() => this.gotoPlay('easy')} >
+                                    onPress={() => this._gotoPlay('easy', 'Modal')} >
                     <Image
                         source={ require('../assets/img/btn_easy.png') }
                         style={styles.btn}
                         />
                 </TouchableHighlight>
 
+                <TouchableWithoutFeedback onPress={() => this.refs.text.transitionTo({opacity: 0.2})}>
+                    <Animatable.Text ref="text">Fade me!</Animatable.Text>
+                </TouchableWithoutFeedback>
             </View>
         );
     }

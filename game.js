@@ -28,14 +28,16 @@ class pirate123 extends Component {
                 style={styles.navigator}
                 renderScene={this.renderScene.bind(this)}
                 initialRoute={{ title: 'Property Finder', id: 'Splash' }}
-                configureScene={(route) => {
-                  if (route.sceneConfig) {
-                    return route.sceneConfig;
-                  }
-                  return Navigator.SceneConfigs.FloatFromRight;
-                }}
+                configureScene={ this.configureScene }
                 />
         );
+    }
+
+    configureScene(route, routeStack){
+        if(route.type == 'Modal') {
+            return Navigator.SceneConfigs.FloatFromBottom
+        }
+        return Navigator.SceneConfigs.PushFromRight
     }
 
     renderScene(route, navigator) {
@@ -46,7 +48,7 @@ class pirate123 extends Component {
             case 'Main':
                 return (<Main navigator={navigator} title="Main" />);
             case 'Play':
-                return (<Play navigator={navigator} title="Play" />);
+                return (<Play navigator={navigator} {...route.passProps} />);
             case 'Pause':
                 return (<Pause navigator={navigator} title="Pause" />);
             case 'GameOver':
